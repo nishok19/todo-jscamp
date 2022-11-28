@@ -1,20 +1,33 @@
 const mongoose = require("mongoose");
 // var id = mongoose.Types.ObjectId();
 
-const tasks = new mongoose.Schema({
-  task: {
-    type: String,
+const tasks = new mongoose.Schema(
+  {
+    task: {
+      type: String,
+    },
+    status: {
+      type: String,
+      enum: ["NOT COMPLETED", "COMPLETED"],
+      default: "NOT COMPLETED",
+    },
   },
-});
+  {
+    timestamps: true,
+  }
+);
 
-const todos = new mongoose.Schema({
-  name: {
-    type: String,
+const todos = new mongoose.Schema(
+  {
+    title: {
+      type: String,
+    },
+    tasks: {
+      type: [tasks],
+      default: [],
+    },
   },
-  tasks: {
-    type: [tasks],
-    default: [],
-  },
-});
+  { timestamps: true }
+);
 
 module.exports = mongoose.model("todo", todos);
