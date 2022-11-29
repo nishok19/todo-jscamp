@@ -11,6 +11,10 @@ const {
   editTodoTitle,
   deleteTodos,
 } = require("../controllers/todoControllers");
+const {
+  loginController,
+  signupController,
+} = require("../controllers/authControllers");
 
 const router = express.Router();
 
@@ -28,4 +32,7 @@ router.put("/api/todos/:todoid/task/:taskid", editTaskStatus);
 router.post("/api/todos/:todoid/task/:taskid", editTaskTitle);
 router.delete("/api/todos/:todoid/task/:taskid", deleteTask);
 
+// Authentication
+router.post("/auth/login", loginController);
+router.post("/auth/signup", signupController);
 module.exports = router;
