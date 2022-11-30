@@ -17,22 +17,24 @@ const {
 } = require("../controllers/authControllers");
 
 const router = express.Router();
+const auth = require("../middleware/auth");
 
 router.get("/", (req, res) => {
   res.send("bellloooo");
 });
 
-router.post("/api/todos", createTodo);
-router.get("/api/todos", getAllTodos);
-router.put("/api/todos", editTodoTitle);
-router.delete("/todos", deleteTodos);
-
-router.post("/api/todos/:id/task", createTask);
-router.put("/api/todos/:todoid/task/:taskid", editTaskStatus);
-router.post("/api/todos/:todoid/task/:taskid", editTaskTitle);
-router.delete("/api/todos/:todoid/task/:taskid", deleteTask);
-
 // Authentication
 router.post("/auth/login", loginController);
 router.post("/auth/signup", signupController);
+
+router.post("/api/todos", auth, createTodo);
+router.get("/api/todos", auth, getAllTodos);
+router.put("/api/todos", auth, editTodoTitle);
+router.delete("/api/todos/:todoid", auth, deleteTodos);
+
+router.post("/api/todos/:id/task", auth, createTask);
+router.put("/api/todos/:todoid/task/:taskid", auth, editTaskStatus);
+router.post("/api/todos/:todoid/task/:taskid", auth, editTaskTitle);
+router.delete("/api/todos/:todoid/task/:taskid", auth, deleteTask);
+
 module.exports = router;

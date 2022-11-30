@@ -1,4 +1,8 @@
 const User = require("../models/userModel");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+
+const { JWT_SECRET } = require("../config/env.config");
 
 exports.loginController = async (req, res) => {
   try {
@@ -14,7 +18,7 @@ exports.loginController = async (req, res) => {
 
     const token = await jwt.sign(
       { id: user.id, email: user.email, username: user.username },
-      SECRET,
+      JWT_SECRET,
       { expiresIn: "2h" }
     );
     user.password = undefined;
@@ -52,7 +56,7 @@ exports.signupController = async (req, res) => {
       email,
       password: hashPwd,
     });
-
+    user.password = undefined;
     res.status(200).json(user);
   } catch (err) {
     console.log("Error is signup ", err);
