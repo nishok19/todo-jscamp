@@ -10,11 +10,13 @@ const auth = async (req, res, next) => {
     console.log("weeeehaaa token is here.....", token);
     if (!token) res.status(401).send("No token found login again");
     const user = jwt.verify(token, JWT_SECRET);
+    //
     req.body.user = user;
     console.log(user);
     next();
   } catch (err) {
     console.log("JSON token error ", err);
+    res.status(401).send(err);
   }
 };
 

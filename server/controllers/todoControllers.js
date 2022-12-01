@@ -21,12 +21,13 @@ exports.createTodo = async (req, res) => {
 
 exports.editTodoTitle = async (req, res) => {
   try {
-    const { id, title, user } = req.body;
-    const todo = await Todo.findById(id);
-    if (user.id !== todo.user) {
-      console.log("Accessing editTodoTitle From another token");
-      throw new Error("Accessing editTodoTitle From another token");
-    }
+    const { title } = req.body;
+    const { todoid } = req.params;
+    const todo = await Todo.findById(todoid);
+    // if (user.id !== todo.user) {
+    //   console.log("Accessing editTodoTitle From another token");
+    //   throw new Error("Accessing editTodoTitle From another token");
+    // }
     todo.title = title;
     todo.save();
     res.status(201).json(todo);
@@ -50,16 +51,11 @@ exports.getAllTodos = async (req, res) => {
 exports.deleteTodos = async (req, res) => {
   try {
     const { todoid } = req.params;
-    const { user } = req.body;
-    const todo = await Todo.findById(todoid);
-    if (todo.user !== user.id) {
-      console.log("Error in deleting Todos");
-      throw new Error("Error in deleting Todos");
-    }
-    // let todos = await Todo.find({ user: user.id });
-    // let remainingTodo = todos?.filter((t) => t._id !== todoid);
-    // todos = remainingTodo;
-    // todos.save();
+    // if (todo.user !== user.id) {
+    //   console.log("Error in deleting Todos");
+    //   throw new Error("Error in deleting Todos");
+    // }
+
     const deletedTodo = await Todo.findByIdAndDelete(todoid);
     res.status(201).json({
       success: true,

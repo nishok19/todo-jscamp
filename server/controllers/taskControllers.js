@@ -2,13 +2,15 @@ const Todo = require("../models/todoModel");
 
 exports.createTask = async (req, res) => {
   try {
-    const { id } = req.params;
+    const { todoid } = req.params;
     const { task } = req.body;
 
-    if (!id || !task)
-      throw new Error("Id and Task cannot be empty in while creating a task");
+    if (!todoid || !task)
+      throw new Error(
+        "TodoId and Task cannot be empty in while creating a task"
+      );
 
-    const todo = await Todo.findById(id);
+    const todo = await Todo.findById(todoid);
     todo.tasks.push({ task });
     await todo.save();
 
