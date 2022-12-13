@@ -1,6 +1,37 @@
-import React from "react";
+import { useEffect, useState } from "react";
+import { account } from "../utils/appwrite.config";
+import { createTodo } from "../utils/db";
+import Toast from "./Toast.component";
 
 const CreateTodo = () => {
+  const [todo, setTodo] = useState("");
+  const [userDetails, setUserDetails] = useState();
+
+  useEffect(() => {
+    const getData = account.get();
+    getData.then(
+      (res) => {
+        console.log("userrrrr", res);
+        setUserDetails(res);
+      },
+      (err) => console.log("Error is getting user data", err)
+    );
+  }, []);
+
+  const handleCreateTodo = async () => {
+    const todoData = {
+      todo,
+      user: userDetails.$id,
+    };
+    console.log("todoooooo+ ", userDetails);
+
+    const isCreated = await createTodo(todoData);
+    if (!isCreated.success) {
+      console.log("Error creating Todo");
+      return <Toast text="Error in creating the todo" />;
+    }
+  };
+
   return (
     <div>
       <label htmlFor="my-modal-5" className="btn p-3 rounded-full">
@@ -25,6 +56,7 @@ const CreateTodo = () => {
                 type="text"
                 placeholder="Type here"
                 className="input input-bordered bg-bglightdark w-full max-w-full mt-6"
+                onChange={(e) => setTodo(e.target.value)}
               />
               {/* /////// */}
               {/* <label className="label">
@@ -37,8 +69,12 @@ const CreateTodo = () => {
             <label htmlFor="my-modal-5" className="btn">
               Cancel
             </label>
-            <label htmlFor="my-modal-5" className="btn">
-              Save
+            <label
+              htmlFor="my-modal-5"
+              className="btn"
+              onClick={handleCreateTodo}
+            >
+              Create
             </label>
           </div>
         </div>

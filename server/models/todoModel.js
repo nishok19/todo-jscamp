@@ -26,6 +26,10 @@ const todos = new mongoose.Schema(
       type: [tasks],
       default: [],
     },
+    user: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true }
 );

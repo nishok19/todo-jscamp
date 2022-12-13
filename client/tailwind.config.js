@@ -8,6 +8,7 @@ module.exports = {
       bglightdark: "#3A454A",
       white: "#fff",
       blue: "#23C4ED",
+      creamwhite: "#F8F0E2",
     },
   },
   plugins: [require("daisyui")],
