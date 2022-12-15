@@ -4,30 +4,43 @@ import "./App.css";
 import TodoLists from "./Components/TodoLists.component";
 import Topbar from "./Components/Topbar.component";
 import { account } from "./utils/appwrite.config";
+import useTodoStore from "./Components/store/store";
 
 import { logout } from "./utils/auth";
 import { getTodos } from "./utils/db";
 
 function App() {
   const navigate = useNavigate();
-  const [todos, setTodos] = useState([]);
-  const [userDetails, setUserDetails] = useState();
+  const addAllTodos = useTodoStore((state) => state.addAllTodos);
+  const setUser = useTodoStore((state) => state.setUser);
+  const storetodos = useTodoStore((state) => state.todos);
+  const storeuser = useTodoStore((state) => state.user);
+  // const [todos, setTodos] = useState([]);
 
   useEffect(() => {
     const getData = account.get();
     getData.then(
       (res) => {
         console.log("userrrrr", res);
-        setUserDetails(res);
+        setUser(res);
         fetchTodos();
+
+        console.log("stooooreee", storetodos);
       },
       (err) => console.log("Error is getting user data", err)
     );
   }, []);
 
+  useEffect(() => {
+    addAllTodos(storetodos);
+  }, [storetodos]);
+
   const fetchTodos = async () => {
     const todos = await getTodos();
-    setTodos(todos);
+
+    addAllTodos(todos);
+
+    // return todos;
   };
 
   const handleLogout = async () => {
@@ -40,7 +53,7 @@ function App() {
   return (
     <>
       <div className="bg-bgdark text-white min-h-screen">
-        {userDetails ? (
+        {storeuser ? (
           <section className="py-[100px] mx-[200px]">
             <button
               className="btn btn-outline btn-error"
@@ -49,7 +62,7 @@ function App() {
               Logout
             </button>
             <Topbar />
-            <TodoLists todos={todos} />
+            <TodoLists todos={storetodos} />
           </section>
         ) : (
           <div className="flex flex-col justify-center items-center min-h-screen	">

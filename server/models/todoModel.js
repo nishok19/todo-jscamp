@@ -28,7 +28,7 @@ const todos = new mongoose.Schema(
     },
     user: {
       type: String,
-      required: true,
+      required: [true, "User is required to create a Todo"],
     },
   },
   { timestamps: true }

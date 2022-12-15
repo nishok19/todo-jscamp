@@ -5,7 +5,7 @@ const TaskList = ({ task }) => {
   const convDate = newDate.toLocaleString();
 
   return (
-    <tr className="hover hover:text-bglightdark">
+    <tr className="hover hover:text-bglightdark hover:bg-bglightdark">
       <TaskLine data={convDate} />
       <TaskLine data={task?.task} />
       <TaskLine data={task?.status} />

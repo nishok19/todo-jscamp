@@ -1,11 +1,17 @@
 import { useEffect, useState } from "react";
 import { account } from "../utils/appwrite.config";
 import { createTodo } from "../utils/db";
+import useTodoStore from "./store/store";
 import Toast from "./Toast.component";
 
 const CreateTodo = () => {
+  const addTodo = useTodoStore((state) => state.addTodo);
   const [todo, setTodo] = useState("");
   const [userDetails, setUserDetails] = useState();
+  const [toast, setToast] = useState({
+    visible: false,
+    msg: "",
+  });
 
   useEffect(() => {
     const getData = account.get();
@@ -18,31 +24,42 @@ const CreateTodo = () => {
     );
   }, []);
 
+  const handleToast = (msg) => {
+    setToast({ visible: true, msg });
+    setTimeout(() => {
+      setToast({ visible: false, msg: "" });
+    }, 5000);
+  };
+
   const handleCreateTodo = async () => {
     const todoData = {
       todo,
       user: userDetails.$id,
     };
-    console.log("todoooooo+ ", userDetails);
 
     const isCreated = await createTodo(todoData);
     if (!isCreated.success) {
       console.log("Error creating Todo");
-      return <Toast text="Error in creating the todo" />;
+      handleToast("Error creating the todo!!!");
+      setTodo("");
     }
+    console.log("todoooooo+ ", isCreated.todo);
+    addTodo(isCreated.todo);
+    handleToast("Todo created successfully...");
+    setTodo("");
   };
 
   return (
     <div>
+      {toast.visible ? <Toast text={toast.msg} /> : null}
       <label htmlFor="my-modal-5" className="btn p-3 rounded-full">
         <img src="./assets/plus-icon.svg" alt="" />
       </label>
 
-      {/* Put this part before </body> tag */}
       <input type="checkbox" id="my-modal-5" className="modal-toggle" />
       <div className="modal ">
         <div className="modal-box w-4/12 max-w-5xl bg-bgdark">
-          <h3 className="font-bold text-[28px]">Tasks</h3>
+          <h3 className="font-bold text-[28px]">Todo</h3>
           <div className="py-4 ">
             <div className="form-control w-full max-w-full	">
               <label className="label ">
@@ -56,6 +73,7 @@ const CreateTodo = () => {
                 type="text"
                 placeholder="Type here"
                 className="input input-bordered bg-bglightdark w-full max-w-full mt-6"
+                value={todo}
                 onChange={(e) => setTodo(e.target.value)}
               />
               {/* /////// */}

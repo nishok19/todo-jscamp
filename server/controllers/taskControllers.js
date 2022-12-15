@@ -4,13 +4,13 @@ exports.createTask = async (req, res) => {
   try {
     const { id } = req.params;
     const { task } = req.body;
-
+    console.log("tassskkk creation.....", id, "........", task);
     if (!id || !task)
       throw new Error("Id and Task cannot be empty in while creating a task");
 
     const todo = await Todo.findById(id);
     todo.tasks.push({ task });
-    await todo.save();
+    await todo.save({ validateBeforeSave: false });
 
     res.status(201).json(todo);
   } catch (err) {
