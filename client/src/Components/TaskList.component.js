@@ -10,7 +10,7 @@ const TaskList = ({ task }) => {
       <TaskLine data={task?.task} />
       <TaskLine data={task?.status} />
       <td className="bg-bgdark">
-        <EditTaskModal />
+        <EditTaskModal data={task} />
       </td>
     </tr>
   );

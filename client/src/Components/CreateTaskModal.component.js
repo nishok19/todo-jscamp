@@ -1,18 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { createTask } from "../utils/db";
 import useTodoStore from "./store/store";
 import Toast from "./Toast.component";
 
 const CreateTaskModal = ({ todo }) => {
-  console.log("yyyyyyyyyyyyyyy", todo);
+  // TODO: Tasks add to one Todo only
 
+  console.log("waaaaaaaaaaaaaat", todo);
   const [task, setTask] = useState("");
+  const [thisTodo, setThisTodo] = useState({});
   const storeuser = useTodoStore((state) => state.user);
   const addTask = useTodoStore((state) => state.addTask);
-  //   const { storeuser, addTask } = useTodoStore((state) => ({
-  //     storeuser: state.user,
-  //     addTask: state.addTask,
-  //   }));
+  const modalId = `my-modal-${todo?._id}`;
+
+  useEffect(() => {
+    setThisTodo(todo);
+  }, [todo]);
+
   const [toast, setToast] = useState({
     visible: false,
     msg: "",
@@ -46,17 +50,21 @@ const CreateTaskModal = ({ todo }) => {
   return (
     <div className="float-right mx-4">
       {toast.visible ? <Toast text={toast.msg} /> : null}
-      <label htmlFor="my-modal-6" className="btn p-3 rounded-full">
+      <label
+        htmlFor={modalId}
+        className="btn p-3 rounded-full"
+        onClick={() => console.log("yyyyyyyyyyyyyyy", todo, thisTodo)}
+      >
         <img src="./assets/plus-icon.svg" alt="" />
       </label>
 
-      <input type="checkbox" id="my-modal-6" className="modal-toggle" />
+      <input type="checkbox" id={modalId} className="modal-toggle" />
       <div className="modal">
         {/* task modal */}
         <div className="modal-box w-4/12 max-w-5xl bg-bgdark">
           <h3 className="font-bold text-[28px]">
-            Create Task in {todo?.title}
-            {console.log("waat", todo)}
+            Create Task in {thisTodo?.title}
+            {console.log("waat", thisTodo?.title)}
           </h3>
           <div className="py-4 ">
             <div className="form-control w-full max-w-full	">
@@ -81,14 +89,10 @@ const CreateTaskModal = ({ todo }) => {
             </div>
           </div>
           <div className="modal-action">
-            <label htmlFor="my-modal-6" className="btn">
+            <label htmlFor={modalId} className="btn">
               Cancel
             </label>
-            <label
-              htmlFor="my-modal-6"
-              className="btn"
-              onClick={handleCreateTask}
-            >
+            <label htmlFor={modalId} className="btn" onClick={handleCreateTask}>
               Create
             </label>
           </div>

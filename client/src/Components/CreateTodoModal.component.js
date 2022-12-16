@@ -12,6 +12,7 @@ const CreateTodo = () => {
     visible: false,
     msg: "",
   });
+  const modalId = `my-modal-${todo?._id}`;
 
   useEffect(() => {
     const getData = account.get();
@@ -52,11 +53,11 @@ const CreateTodo = () => {
   return (
     <div>
       {toast.visible ? <Toast text={toast.msg} /> : null}
-      <label htmlFor="my-modal-5" className="btn p-3 rounded-full">
+      <label htmlFor={modalId} className="btn p-3 rounded-full">
         <img src="./assets/plus-icon.svg" alt="" />
       </label>
 
-      <input type="checkbox" id="my-modal-5" className="modal-toggle" />
+      <input type="checkbox" id={modalId} className="modal-toggle" />
       <div className="modal ">
         <div className="modal-box w-4/12 max-w-5xl bg-bgdark">
           <h3 className="font-bold text-[28px]">Todo</h3>
@@ -84,14 +85,10 @@ const CreateTodo = () => {
             </div>
           </div>
           <div className="modal-action">
-            <label htmlFor="my-modal-5" className="btn">
+            <label htmlFor={modalId} className="btn">
               Cancel
             </label>
-            <label
-              htmlFor="my-modal-5"
-              className="btn"
-              onClick={handleCreateTodo}
-            >
+            <label htmlFor={modalId} className="btn" onClick={handleCreateTodo}>
               Create
             </label>
           </div>

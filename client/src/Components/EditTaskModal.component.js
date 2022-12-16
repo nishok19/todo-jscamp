@@ -1,17 +1,21 @@
 import React from "react";
 
-const EditTaskModal = () => {
+const EditTaskModal = ({ data }) => {
+  const modalId = `my-modal-${data?._id}`;
+
   return (
     <div>
-      <label htmlFor="my-modal-7" className="btn p-3 rounded-full">
+      <label htmlFor={modalId} className="btn p-3 rounded-full">
         <img src="./assets/edit-icon.svg" alt="Edit" />
       </label>
 
       {/* Put this part before </body> tag */}
-      <input type="checkbox" id="my-modal-7" className="modal-toggle" />
+      <input type="checkbox" id={modalId} className="modal-toggle" />
       <div className="modal ">
         <div className="modal-box w-4/12 max-w-5xl bg-bgdark">
-          <h3 className="font-bold text-[28px]">Tasks</h3>
+          <h3 className="font-bold text-[28px]  text-white">
+            Edit {data?.task}
+          </h3>
           <div className="py-4 ">
             <div className="form-control w-full max-w-full	">
               <label className="label ">
@@ -34,10 +38,10 @@ const EditTaskModal = () => {
             </div>
           </div>
           <div className="modal-action">
-            <label htmlFor="my-modal-7" className="btn">
+            <label htmlFor={modalId} className="btn">
               Cancel
             </label>
-            <label htmlFor="my-modal-7" className="btn">
+            <label htmlFor={modalId} className="btn">
               Save
             </label>
           </div>

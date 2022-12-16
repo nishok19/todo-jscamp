@@ -23,7 +23,7 @@ const EditOptions = () => (
       </label>
       <ul
         tabIndex={0}
-        className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 !bg-bglightdark"
+        className="dropdown-content menu p-2 shadow  rounded-box w-52 bg-bglightdark"
       >
         <li className="bg-bglightdark">
           <a>Item 1</a>
