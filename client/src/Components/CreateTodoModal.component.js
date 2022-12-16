@@ -42,11 +42,12 @@ const CreateTodo = () => {
     if (!isCreated.success) {
       console.log("Error creating Todo");
       handleToast("Error creating the todo!!!");
-      setTodo("");
+      return null;
+    } else {
+      console.log("todoooooo+ ", isCreated.todo);
+      addTodo(isCreated.todo);
+      handleToast("Todo created successfully...");
     }
-    console.log("todoooooo+ ", isCreated.todo);
-    addTodo(isCreated.todo);
-    handleToast("Todo created successfully...");
     setTodo("");
   };
 

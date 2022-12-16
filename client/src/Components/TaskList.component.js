@@ -1,6 +1,6 @@
 import EditTaskModal from "./EditTaskModal.component";
 
-const TaskList = ({ task }) => {
+const TaskList = ({ task, todo }) => {
   const newDate = new Date(task?.createdAt);
   const convDate = newDate.toLocaleString();
 
@@ -10,7 +10,7 @@ const TaskList = ({ task }) => {
       <TaskLine data={task?.task} />
       <TaskLine data={task?.status} />
       <td className="bg-bgdark">
-        <EditTaskModal data={task} />
+        <EditTaskModal task={task} todo={todo} />
       </td>
     </tr>
   );

@@ -15,7 +15,7 @@ const TodoList = ({ todo }) => {
           <table className="table w-full">
             <tbody>
               {todo?.tasks.map((task) => (
-                <TaskList task={task} key={task?._id} />
+                <TaskList task={task} todo={todo} key={task?._id} />
               ))}
             </tbody>
           </table>

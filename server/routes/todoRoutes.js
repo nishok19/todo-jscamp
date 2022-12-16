@@ -1,8 +1,8 @@
 const express = require("express");
 const {
   createTask,
-  editTaskStatus,
-  editTaskTitle,
+  editTask,
+  // editTaskTitle,
   deleteTask,
 } = require("../controllers/taskControllers");
 const {
@@ -24,8 +24,8 @@ router.put("/api/todos", editTodoTitle);
 router.delete("/todos", deleteTodos);
 
 router.post("/api/todos/:id/task", createTask);
-router.put("/api/todos/:todoid/task/:taskid", editTaskStatus);
-router.post("/api/todos/:todoid/task/:taskid", editTaskTitle);
+router.put("/api/todos/:todoid/task/:taskid", editTask);
+// router.post("/api/todos/:todoid/task/:taskid", editTaskTitle);
 router.delete("/api/todos/:todoid/task/:taskid", deleteTask);
 
 module.exports = router;
