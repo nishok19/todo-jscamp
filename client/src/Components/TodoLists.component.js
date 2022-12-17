@@ -6,7 +6,7 @@ const TodoLists = ({ todos }) => {
     <div className="">
       {todos.map((todo) => (
         <div className="mt-5" key={todo?._id}>
-          <EditOptions />
+          <EditOptions todo={todo} />
           <CreateTaskModal todo={todo} />
           <TodoList todo={todo} />
         </div>
@@ -15,7 +15,7 @@ const TodoLists = ({ todos }) => {
   );
 };
 
-const EditOptions = () => (
+const EditOptions = ({ todo }) => (
   <div>
     <div className="dropdown dropdown-left float-right">
       <label tabIndex={0} className="btn">
@@ -26,10 +26,10 @@ const EditOptions = () => (
         className="dropdown-content menu p-2 shadow  rounded-box w-52 bg-bglightdark"
       >
         <li className="bg-bglightdark">
-          <a>Item 1</a>
+          <button>Edit</button>
         </li>
         <li className="bg-bglightdark">
-          <a>Item 2</a>
+          <button>Delete</button>
         </li>
       </ul>
     </div>

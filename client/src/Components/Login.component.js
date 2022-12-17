@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { login } from "../utils/auth";
+import Toast from "./Toast.component";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -9,19 +10,31 @@ const Login = () => {
     email: "",
     password: "",
   });
-  const [errormsg, setErrmsg] = useState("");
+  const [toast, setToast] = useState({
+    visible: false,
+    msg: "",
+  });
 
   const loginUser = async (e) => {
     e.preventDefault();
     const isLogged = await login(user);
     if (!isLogged.success) {
-      setErrmsg("Error in Login", isLogged.err);
+      handleToast("Error in Login. Provide valid credentials.");
+    } else {
+      navigate("/home");
     }
-    navigate("/home");
+  };
+
+  const handleToast = (msg) => {
+    setToast({ visible: true, msg });
+    setTimeout(() => {
+      setToast({ visible: false, msg: "" });
+    }, 5000);
   };
 
   return (
     <div className="bg-creamwhite min-h-screen flex flex-col">
+      {toast.visible ? <Toast text={toast.msg} /> : null}
       <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
         <div className="bg-white px-6 py-8 rounded shadow-md text-black w-full">
           <h1 className="mb-8 text-3xl text-center">Login</h1>
@@ -49,7 +62,6 @@ const Login = () => {
           >
             Login
           </button>
-          <div>{errormsg}</div>
         </div>
 
         <div className="text-grey-dark mt-6">

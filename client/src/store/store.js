@@ -32,6 +32,13 @@ const useTodoStore = create((set) => ({
       }),
     }));
   },
+
+  clearAll: () => {
+    set((state) => ({
+      todos: [],
+      user: {},
+    }));
+  },
 }));
 
 export default useTodoStore;

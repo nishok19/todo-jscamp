@@ -19,7 +19,7 @@ router.get("/", (req, res) => {
 });
 
 router.post("/api/todos", createTodo);
-router.get("/api/todos", getAllTodos);
+router.get("/api/todos/:userid", getAllTodos);
 router.put("/api/todos", editTodoTitle);
 router.delete("/todos", deleteTodos);
 

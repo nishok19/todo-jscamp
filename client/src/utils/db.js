@@ -1,7 +1,7 @@
 import axios from "axios";
 
-export const getTodos = async () => {
-  const todos = await axios.get("/api/todos");
+export const getTodos = async (userid) => {
+  const todos = await axios.get(`/api/todos/${userid}`);
   return todos.data;
 };
 

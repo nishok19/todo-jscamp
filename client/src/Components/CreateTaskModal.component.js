@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { createTask } from "../utils/db";
-import useTodoStore from "./store/store";
+import useTodoStore from "../store/store";
 import Toast from "./Toast.component";
 
 const CreateTaskModal = ({ todo }) => {

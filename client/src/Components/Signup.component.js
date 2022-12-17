@@ -11,9 +11,9 @@ const Signup = () => {
   });
   const [errormsg, setErrmsg] = useState("");
 
-  const signupUser = (e) => {
+  const signupUser = async (e) => {
     e.preventDefault();
-    const isCreated = signup(user);
+    const isCreated = await signup(user);
     if (!isCreated.success) {
       setErrmsg("Error in SignUp", isCreated.err.message);
     }

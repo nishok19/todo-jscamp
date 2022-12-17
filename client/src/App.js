@@ -4,7 +4,7 @@ import "./App.css";
 import TodoLists from "./Components/TodoLists.component";
 import Topbar from "./Components/Topbar.component";
 import { account } from "./utils/appwrite.config";
-import useTodoStore from "./Components/store/store";
+import useTodoStore from "./store/store";
 
 import { logout } from "./utils/auth";
 import { getTodos } from "./utils/db";
@@ -13,6 +13,7 @@ function App() {
   const navigate = useNavigate();
   const addAllTodos = useTodoStore((state) => state.addAllTodos);
   const setUser = useTodoStore((state) => state.setUser);
+  const clearAll = useTodoStore((state) => state.clearAll);
   const storetodos = useTodoStore((state) => state.todos);
   const storeuser = useTodoStore((state) => state.user);
   // const [todos, setTodos] = useState([]);
@@ -23,7 +24,7 @@ function App() {
       (res) => {
         console.log("userrrrr", res);
         setUser(res);
-        fetchTodos();
+        fetchTodos(res);
 
         console.log("stooooreee", storetodos);
       },
@@ -35,8 +36,8 @@ function App() {
     addAllTodos(storetodos);
   }, [storetodos]);
 
-  const fetchTodos = async () => {
-    const todos = await getTodos();
+  const fetchTodos = async (user) => {
+    const todos = await getTodos(user.$id);
 
     addAllTodos(todos);
 
@@ -46,8 +47,11 @@ function App() {
   const handleLogout = async () => {
     const isLogout = await logout();
     if (isLogout.success) {
-      navigate("/login");
+      clearAll();
+      console.log("Logged Out successfully");
     }
+    console.log("Error in Logged Out");
+    navigate("/login");
   };
 
   return (
@@ -55,12 +59,15 @@ function App() {
       <div className="bg-bgdark text-white min-h-screen">
         {storeuser ? (
           <section className="py-[100px] mx-[200px]">
-            <button
-              className="btn btn-outline btn-error"
-              onClick={handleLogout}
-            >
-              Logout
-            </button>
+            <div className="flex justify-between mb-3">
+              <span>Hi, {storeuser?.name}</span>
+              <button
+                className="btn btn-outline btn-error"
+                onClick={handleLogout}
+              >
+                Logout
+              </button>
+            </div>
             <Topbar />
             <TodoLists todos={storetodos} />
           </section>

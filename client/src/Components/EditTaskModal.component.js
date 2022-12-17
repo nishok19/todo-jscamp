@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { editTask } from "../utils/db";
-import useTodoStore from "./store/store";
+import useTodoStore from "../store/store";
 import Toast from "./Toast.component";
 
 const EditTaskModal = ({ task, todo }) => {
@@ -15,6 +15,11 @@ const EditTaskModal = ({ task, todo }) => {
   });
   const addTask = useTodoStore((state) => state.addTask);
 
+  const [orgTask, setOrgTask] = useState({
+    task: task?.task,
+    status: task?.status,
+  });
+
   useEffect(() => {
     setThisTask(task?.task);
     setStatus(task?.status);
@@ -25,6 +30,7 @@ const EditTaskModal = ({ task, todo }) => {
   }, []);
 
   const handleEditTask = async () => {
+    if (orgTask.task == thisTask && orgTask.status == status) return null;
     console.log("todoooooo...", todo);
     const res = await editTask(task._id, todo._id, { task: thisTask, status });
     if (!res.success) {
@@ -60,7 +66,9 @@ const EditTaskModal = ({ task, todo }) => {
       <input type="checkbox" id={modalId} className="modal-toggle" />
       <div className="modal">
         <div className="modal-box w-4/12 max-w-5xl bg-bgdark">
-          <h3 className="font-bold text-[28px]  text-white">Edit {thisTask}</h3>
+          <h3 className="font-bold text-[28px]  text-white">
+            Edit {orgTask?.task}
+          </h3>
           <div className="py-4 ">
             <div className="form-control w-full max-w-full	">
               <label className="label ">
@@ -76,37 +84,26 @@ const EditTaskModal = ({ task, todo }) => {
                 value={thisTask}
                 onChange={(e) => setThisTask(e.target.value)}
               />
+
               <select
                 defaultValue={status}
                 value={status}
+                onChange={(e) => setStatus(e.target.value)}
                 className="select w-full max-w-xs mt-5 bg-bglightdark text-white"
               >
-                {/* <option className="text-white" value={status}>
-                  {status}
-                </option> */}
-                <option
-                  className="text-white"
-                  value={allStatus[0]}
-                  onChange={() => setStatus(allStatus[0])}
-                >
+                <option className="text-white" value={allStatus[0]}>
                   {allStatus[0]}
                 </option>
-                <option
-                  className="text-white"
-                  value={allStatus[1]}
-                  onChange={() => setStatus(allStatus[1])}
-                >
+                <option className="text-white" value={allStatus[1]}>
                   {allStatus[1]}
                 </option>
-                <option
-                  className="text-white"
-                  value={allStatus[2]}
-                  onChange={() => setStatus(allStatus[2])}
-                >
+                <option className="text-white" value={allStatus[2]}>
                   {allStatus[2]}
                 </option>
               </select>
-              <span className="label-text-alt text-white">{status}</span>
+              <span className="label-text-alt text-white">
+                {orgTask?.status}
+              </span>
               {/* /////// */}
               {/* <label className="label">
                 <span className="label-text-alt">Alt label</span>

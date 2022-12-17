@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { account } from "../utils/appwrite.config";
 import { createTodo } from "../utils/db";
-import useTodoStore from "./store/store";
+import useTodoStore from "../store/store";
 import Toast from "./Toast.component";
 
 const CreateTodo = () => {
