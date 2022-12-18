@@ -4,14 +4,11 @@ import useTodoStore from "../store/store";
 import Toast from "./Toast.component";
 
 const CreateTaskModal = ({ todo }) => {
-  // TODO: Tasks add to one Todo only
-
-  console.log("waaaaaaaaaaaaaat", todo);
   const [task, setTask] = useState("");
   const [thisTodo, setThisTodo] = useState({});
   const storeuser = useTodoStore((state) => state.user);
   const addTask = useTodoStore((state) => state.addTask);
-  const modalId = `my-modal-${todo?._id}`;
+  const modalId = `my-createTaskModal-${todo?._id}`;
 
   useEffect(() => {
     setThisTodo(todo);
@@ -64,7 +61,6 @@ const CreateTaskModal = ({ todo }) => {
         <div className="modal-box w-4/12 max-w-5xl bg-bgdark">
           <h3 className="font-bold text-[28px]">
             Create Task in {thisTodo?.title}
-            {console.log("waat", thisTodo?.title)}
           </h3>
           <div className="py-4 ">
             <div className="form-control w-full max-w-full	">

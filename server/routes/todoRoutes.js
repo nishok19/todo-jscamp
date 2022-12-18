@@ -20,8 +20,8 @@ router.get("/", (req, res) => {
 
 router.post("/api/todos", createTodo);
 router.get("/api/todos/:userid", getAllTodos);
-router.put("/api/todos", editTodoTitle);
-router.delete("/todos", deleteTodos);
+router.put("/api/todos/:todoid", editTodoTitle);
+router.delete("/api/todos/:todoid", deleteTodos);
 
 router.post("/api/todos/:id/task", createTask);
 router.put("/api/todos/:todoid/task/:taskid", editTask);

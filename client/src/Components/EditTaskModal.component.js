@@ -6,7 +6,7 @@ import Toast from "./Toast.component";
 const EditTaskModal = ({ task, todo }) => {
   const [thisTask, setThisTask] = useState("");
   const [status, setStatus] = useState("");
-  const modalId = `my-modal-${task?._id}`;
+  const modalId = `my-editTaskModal-${task?._id}`;
   const [otherStatus, setOtherStatus] = useState([]);
   const allStatus = ["NOT COMPLETED", "PENDING", "COMPLETED"];
   const [toast, setToast] = useState({
@@ -52,7 +52,7 @@ const EditTaskModal = ({ task, todo }) => {
   };
 
   return (
-    <div>
+    <td className="bg-bgdark">
       {toast.visible ? <Toast text={toast.msg} /> : null}
 
       <label
@@ -121,7 +121,7 @@ const EditTaskModal = ({ task, todo }) => {
           </div>
         </div>
       </div>
-    </div>
+    </td>
   );
 };
 

@@ -23,11 +23,25 @@ const useTodoStore = create((set) => ({
     }));
   },
 
+  deleteTodo: (todoid) => {
+    set((state) => ({
+      todos: state.todos.filter((t) => t._id !== todoid),
+    }));
+  },
+
+  deleteTask: (todo) => {
+    set((state) => ({
+      todos: state.todos.map((t) => {
+        if (t._id !== todo._id) return t;
+        return todo;
+      }),
+    }));
+  },
+
   addTask: (todo) => {
     set((state) => ({
       todos: state.todos.map((t) => {
-        console.log("ohhh storeee", todo, t);
-        if (t._id != todo._id) return t;
+        if (t._id !== todo._id) return t;
         return todo;
       }),
     }));

@@ -21,8 +21,10 @@ exports.createTodo = async (req, res) => {
 
 exports.editTodoTitle = async (req, res) => {
   try {
-    const { id, title } = req.body;
-    const todo = await Todo.findById(id);
+    const { title } = req.body;
+    const { todoid } = req.params;
+    console.log("Editt tdo title...", title, todoid);
+    const todo = await Todo.findById(todoid);
     todo.title = title;
     todo.save();
     res.status(201).json(todo);
@@ -45,8 +47,9 @@ exports.getAllTodos = async (req, res) => {
 
 exports.deleteTodos = async (req, res) => {
   try {
-    const { id } = req.params;
-    const todo = await Todo.findByIdAndDelete(id);
+    const { todoid } = req.params;
+    if (!todoid) throw new Error("todo-id cannot be empty");
+    const todo = await Todo.findByIdAndDelete(todoid);
     res.status(201).json({
       success: true,
       todo,

@@ -1,3 +1,4 @@
+import ConfirmDeleteModal from "./ConfirmDeleteModal.component";
 import EditTaskModal from "./EditTaskModal.component";
 
 const TaskList = ({ task, todo }) => {
@@ -9,9 +10,8 @@ const TaskList = ({ task, todo }) => {
       <TaskLine data={convDate} />
       <TaskLine data={task?.task} />
       <TaskLine data={task?.status} />
-      <td className="bg-bgdark">
-        <EditTaskModal task={task} todo={todo} />
-      </td>
+      <EditTaskModal task={task} todo={todo} />
+      <ConfirmDeleteModal task={task} todo={todo} />
     </tr>
   );
 };
