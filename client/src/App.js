@@ -8,6 +8,7 @@ import useTodoStore from "./store/store";
 
 import { logout } from "./utils/auth";
 import { getTodos } from "./utils/db";
+import { sortAscTodoList } from "./utils/helper";
 
 function App() {
   const navigate = useNavigate();
@@ -16,6 +17,10 @@ function App() {
   const clearAll = useTodoStore((state) => state.clearAll);
   const storetodos = useTodoStore((state) => state.todos);
   const storeuser = useTodoStore((state) => state.user);
+  const storeSearchedTodos = useTodoStore((state) => state.searchedTodos);
+  const storeRemoveSearchedTodos = useTodoStore(
+    (state) => state.removeSearchedTodos
+  );
   // const [todos, setTodos] = useState([]);
 
   useEffect(() => {
@@ -32,15 +37,15 @@ function App() {
     );
   }, []);
 
-  useEffect(() => {
-    addAllTodos(storetodos);
-  }, [storetodos]);
+  // useEffect(() => {
+  //   addAllTodos(storetodos);
+  // }, [storetodos]);
 
   const fetchTodos = async (user) => {
     const todos = await getTodos(user.$id);
-
-    addAllTodos(todos);
-
+    console.log("untodos", todos);
+    const sortedTodos = sortAscTodoList(todos);
+    addAllTodos(sortedTodos);
     // return todos;
   };
 
@@ -57,8 +62,13 @@ function App() {
   return (
     <>
       <div className="bg-bgdark text-white min-h-screen">
+        <img
+          src="./assets/logo.png"
+          alt="logo"
+          className="w-[150px] h-[150px] ml-[10em]"
+        />
         {storeuser ? (
-          <section className="py-[100px] mx-[200px]">
+          <section className="mx-[200px]">
             <div className="flex justify-between mb-3">
               <span>Hi, {storeuser?.name}</span>
               <button
@@ -69,7 +79,18 @@ function App() {
               </button>
             </div>
             <Topbar />
-            <TodoLists todos={storetodos} />
+            {storeSearchedTodos.isSearched ? (
+              <>
+                <div className="flex justify-end mt-5">
+                  <button className="btn " onClick={storeRemoveSearchedTodos}>
+                    Clear Search
+                  </button>
+                </div>
+                <TodoLists todos={storeSearchedTodos.searchTodos} />
+              </>
+            ) : (
+              <TodoLists todos={storetodos} />
+            )}
           </section>
         ) : (
           <div className="flex flex-col justify-center items-center min-h-screen	">

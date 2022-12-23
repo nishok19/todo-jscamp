@@ -1,7 +1,6 @@
 import TaskList from "./TaskList.component";
 
 const TodoList = ({ todo }) => {
-  console.log("ooooooooooo", todo);
   return (
     <div tabIndex={0} className="collapse collapse-arrow grid">
       <input type="checkbox" />

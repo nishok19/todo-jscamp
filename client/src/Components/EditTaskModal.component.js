@@ -25,13 +25,11 @@ const EditTaskModal = ({ task, todo }) => {
     setStatus(task?.status);
 
     let other = allStatus.filter((s) => status != s);
-    console.log("otherrrr", other);
     setOtherStatus(other);
   }, []);
 
   const handleEditTask = async () => {
     if (orgTask.task == thisTask && orgTask.status == status) return null;
-    console.log("todoooooo...", todo);
     const res = await editTask(task._id, todo._id, { task: thisTask, status });
     if (!res.success) {
       console.log("Error editing Task");
@@ -55,11 +53,7 @@ const EditTaskModal = ({ task, todo }) => {
     <td className="bg-bgdark">
       {toast.visible ? <Toast text={toast.msg} /> : null}
 
-      <label
-        htmlFor={modalId}
-        className="btn p-3 rounded-full"
-        onClick={() => console.log(otherStatus, status)}
-      >
+      <label htmlFor={modalId} className="btn p-3 rounded-full">
         <img src="./assets/edit-icon.svg" alt="Edit" />
       </label>
 

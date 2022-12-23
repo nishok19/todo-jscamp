@@ -3,6 +3,11 @@ import create from "zustand";
 const useTodoStore = create((set) => ({
   todos: [],
   user: {},
+  sortPref: "Asc",
+  searchedTodos: {
+    isSearched: false,
+    searchTodos: [],
+  },
 
   setUser: (user) => {
     set((state) => ({
@@ -11,7 +16,7 @@ const useTodoStore = create((set) => ({
   },
 
   addAllTodos: (allTodos) => {
-    console.log("toooodoooos", allTodos);
+    console.log("toooodoooos store", allTodos);
     set((state) => ({
       todos: allTodos,
     }));
@@ -51,6 +56,30 @@ const useTodoStore = create((set) => ({
     set((state) => ({
       todos: [],
       user: {},
+    }));
+  },
+
+  toggleSortPref: () => {
+    set((state) => ({
+      sortPref: state.sortPref == "Asc" ? "Dsc" : "Asc",
+    }));
+  },
+
+  addSearchedTodos: (todos) => {
+    set((state) => ({
+      searchedTodos: {
+        isSearched: true,
+        searchTodos: todos,
+      },
+    }));
+  },
+
+  removeSearchedTodos: () => {
+    set((state) => ({
+      searchedTodos: {
+        isSearched: false,
+        searchTodos: [],
+      },
     }));
   },
 }));
