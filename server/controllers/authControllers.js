@@ -11,10 +11,9 @@ exports.loginController = async (req, res) => {
       return res.send(401).send("All the fields are required");
 
     let user = await User.findOne({ email });
-    if (!user) res.status(404).send("User not found. Please signup first");
-
     const isPwdCrct = await bcrypt.compare(password, user.password);
-    if (!isPwdCrct) res.status(401).send("Password is incorrect");
+    if (!user || !isPwdCrct)
+      throw new Error("Error is login due to bad credentials");
 
     const token = await jwt.sign(
       { id: user.id, email: user.email, username: user.username },

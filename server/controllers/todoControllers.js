@@ -3,7 +3,6 @@ const Todo = require("../models/todoModel");
 exports.createTodo = async (req, res) => {
   try {
     const { title, tasks, user } = req.body;
-    console.log("hooooyaaaa, ", req.body);
     if (!title || !user) {
       throw new Error("Todo title or User cannot be empty");
     }
@@ -24,10 +23,6 @@ exports.editTodoTitle = async (req, res) => {
     const { title } = req.body;
     const { todoid } = req.params;
     const todo = await Todo.findById(todoid);
-    // if (user.id !== todo.user) {
-    //   console.log("Accessing editTodoTitle From another token");
-    //   throw new Error("Accessing editTodoTitle From another token");
-    // }
     todo.title = title;
     todo.save();
     res.status(201).json(todo);

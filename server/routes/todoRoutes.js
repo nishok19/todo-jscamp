@@ -1,8 +1,7 @@
 const express = require("express");
 const {
   createTask,
-  editTaskStatus,
-  editTaskTitle,
+  editTask,
   deleteTask,
 } = require("../controllers/taskControllers");
 const {
@@ -25,11 +24,11 @@ router.get("/", (req, res) => {
 });
 
 // Authentication
-router.post("/auth/login", loginController);
-router.post("/auth/signup", signupController);
+router.post("/api/auth/login", loginController);
+router.post("/api/auth/signup", signupController);
 
 router.post("/api/todos", auth, createTodo);
-router.get("/api/todos", auth, getAllTodos);
+router.get("/api/todos/", auth, getAllTodos);
 router.put("/api/todos/:todoid", auth, todoauthorization, editTodoTitle);
 router.delete("/api/todos/:todoid", auth, todoauthorization, deleteTodos);
 
@@ -38,13 +37,7 @@ router.put(
   "/api/todos/:todoid/task/:taskid",
   auth,
   todoauthorization,
-  editTaskStatus
-);
-router.post(
-  "/api/todos/:todoid/task/:taskid",
-  auth,
-  todoauthorization,
-  editTaskTitle
+  editTask
 );
 router.delete(
   "/api/todos/:todoid/task/:taskid",

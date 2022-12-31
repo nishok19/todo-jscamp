@@ -3,7 +3,7 @@ const { JWT_SECRET } = require("../config/env.config");
 
 const auth = async (req, res, next) => {
   try {
-    // const { token } = req.cookies || req.body;
+    // const cookies = req.cookies;
     const bearerToken = req.headers.authorization;
 
     const token = bearerToken.split(" ")[1];
@@ -15,7 +15,7 @@ const auth = async (req, res, next) => {
     console.log(user);
     next();
   } catch (err) {
-    console.log("JSON token error ", err);
+    console.log("JSON token auth error ", err);
     res.status(401).send(err);
   }
 };

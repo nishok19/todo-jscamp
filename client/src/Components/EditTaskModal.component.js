@@ -1,31 +1,111 @@
-import React from "react";
+import { useEffect, useState } from "react";
+import { editTask } from "../utils/db";
+import useTodoStore from "../store/store";
+import Toast from "./Toast.component";
 
-const EditTaskModal = () => {
+const EditTaskModal = ({ task, todo }) => {
+  const [thisTask, setThisTask] = useState(task.task);
+  const [status, setStatus] = useState(task.status);
+  const modalId = `my-editTaskModal-${task?._id}`;
+  const [otherStatus, setOtherStatus] = useState([]);
+  const allStatus = ["NOT COMPLETED", "PENDING", "COMPLETED"];
+  const [toast, setToast] = useState({
+    visible: false,
+    msg: "",
+  });
+  const addTask = useTodoStore((state) => state.addTask);
+  const storeToken = useTodoStore((state) => state.jwt);
+
+  const [orgTask, setOrgTask] = useState({
+    task: task?.task,
+    status: task?.status,
+  });
+
+  useEffect(() => {
+    setThisTask(task?.task);
+    setStatus(task?.status);
+
+    let other = allStatus.filter((s) => status != s);
+    setOtherStatus(other);
+  }, []);
+
+  const handleEditTask = async () => {
+    if (orgTask.task == thisTask && orgTask.status == status) return null;
+    const res = await editTask(
+      task._id,
+      todo._id,
+      { task: thisTask, status },
+      storeToken
+    );
+    if (!res.success) {
+      console.log("Error editing Task");
+      handleToast("Error editing the task!!!");
+      setThisTask(orgTask);
+      return null;
+    } else {
+      console.log("editedddd task", res);
+      addTask(res.todo);
+      handleToast("Task edited successfully...");
+      setThisTask(thisTask);
+    }
+  };
+
+  const handleToast = (msg) => {
+    setToast({ visible: true, msg });
+    setTimeout(() => {
+      setToast({ visible: false, msg: "" });
+    }, 5000);
+  };
+
   return (
-    <div>
-      <label htmlFor="my-modal-5" className="btn p-3 rounded-full">
+    <td className="bg-bgdark">
+      {toast.visible ? <Toast text={toast.msg} /> : null}
+
+      <label htmlFor={modalId} className="btn p-3 rounded-full">
         <img src="./assets/edit-icon.svg" alt="Edit" />
       </label>
 
-      {/* Put this part before </body> tag */}
-      <input type="checkbox" id="my-modal-5" className="modal-toggle" />
-      <div className="modal ">
+      <input type="checkbox" id={modalId} className="modal-toggle" />
+      <div className="modal">
         <div className="modal-box w-4/12 max-w-5xl bg-bgdark">
-          <h3 className="font-bold text-[28px]">Tasks</h3>
+          <h3 className="font-bold text-[28px]  text-white">
+            Edit {orgTask?.task}
+          </h3>
           <div className="py-4 ">
             <div className="form-control w-full max-w-full	">
               <label className="label ">
                 <span className="label-text  text-white">
                   Enter the Todo name
                 </span>
-                {/* <span className="label-text-alt text-white">Alt label</span> */}
               </label>
               {/* /////// */}
               <input
                 type="text"
                 placeholder="Type here"
-                className="input input-bordered bg-bglightdark w-full max-w-full mt-6"
+                className="input input-bordered bg-bglightdark text-white w-full max-w-full mt-6"
+                value={thisTask}
+                onChange={(e) => setThisTask(e.target.value)}
               />
+
+              <select
+                defaultValue={status}
+                value={status}
+                onChange={(e) => setStatus(e.target.value)}
+                className="select w-full max-w-xs mt-5 bg-bglightdark text-white"
+              >
+                <option className="text-white" value={allStatus[0]}>
+                  {allStatus[0]}
+                </option>
+                <option className="text-white" value={allStatus[1]}>
+                  {allStatus[1]}
+                </option>
+                <option className="text-white" value={allStatus[2]}>
+                  {allStatus[2]}
+                </option>
+              </select>
+              <span className="label-text-alt text-white">
+                {orgTask?.status}
+              </span>
               {/* /////// */}
               {/* <label className="label">
                 <span className="label-text-alt">Alt label</span>
@@ -34,16 +114,16 @@ const EditTaskModal = () => {
             </div>
           </div>
           <div className="modal-action">
-            <label htmlFor="my-modal-5" className="btn">
+            <label htmlFor={modalId} className="btn">
               Cancel
             </label>
-            <label htmlFor="my-modal-5" className="btn">
+            <label htmlFor={modalId} className="btn" onClick={handleEditTask}>
               Save
             </label>
           </div>
         </div>
       </div>
-    </div>
+    </td>
   );
 };
 
