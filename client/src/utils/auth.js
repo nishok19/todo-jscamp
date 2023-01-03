@@ -37,4 +37,24 @@ export const signup = async ({ username, email, password }) => {
   }
 };
 
-export const logout = async () => {};
+export const logout = async () => {
+  try {
+    console.log("wwaaaaaaaaatt");
+    // const res = await axios({
+    //   method: "put",
+    //   url: "/api/auth/logout",
+    //   withCredentials: true,
+    // });
+    const res = await axios.get(
+      "/api/auth/logout",
+      {},
+      { withCredentials: true }
+    );
+    console.log("looogout", res);
+    if (!res) throw new Error("Error in 'logout-auth'");
+    return { success: true, res };
+  } catch (err) {
+    console.log("Error in logout ", err);
+    return { success: false, err };
+  }
+};

@@ -34,9 +34,9 @@ exports.editTodoTitle = async (req, res) => {
 
 exports.getAllTodos = async (req, res) => {
   try {
-    const { user } = req.body;
+    const { user, jwt } = req.body;
     const todos = await Todo.find({ user: user.id });
-    res.status(201).json(todos);
+    res.status(201).json({ todos, user, jwt });
   } catch (err) {
     console.log(err);
     res.status(401).send(err);

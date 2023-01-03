@@ -13,6 +13,7 @@ const {
 const {
   loginController,
   signupController,
+  logoutController,
 } = require("../controllers/authControllers");
 
 const router = express.Router();
@@ -26,9 +27,10 @@ router.get("/", (req, res) => {
 // Authentication
 router.post("/api/auth/login", loginController);
 router.post("/api/auth/signup", signupController);
+router.get("/api/auth/logout", logoutController);
 
-router.post("/api/todos", auth, createTodo);
 router.get("/api/todos/", auth, getAllTodos);
+router.post("/api/todos", auth, createTodo);
 router.put("/api/todos/:todoid", auth, todoauthorization, editTodoTitle);
 router.delete("/api/todos/:todoid", auth, todoauthorization, deleteTodos);
 

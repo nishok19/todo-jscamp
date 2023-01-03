@@ -13,7 +13,7 @@ const useTodoStore = create((set) => ({
   setUser: (user) => {
     set((state) => ({
       user: user.user,
-      jwt: user.token,
+      jwt: user.jwt,
     }));
   },
 
@@ -64,7 +64,7 @@ const useTodoStore = create((set) => ({
 
   toggleSortPref: () => {
     set((state) => ({
-      sortPref: state.sortPref == "Asc" ? "Dsc" : "Asc",
+      sortPref: state.sortPref === "Asc" ? "Dsc" : "Asc",
     }));
   },
 

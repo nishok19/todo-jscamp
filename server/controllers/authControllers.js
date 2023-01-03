@@ -25,9 +25,10 @@ exports.loginController = async (req, res) => {
 
     const options = {
       expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
+      // expires: new Date(Date.now() + 600),
       httpOnly: true,
     };
-    res.status(201).cookie("token", token, options).json({ user, token });
+    res.status(201).cookie("jwt", token, options).json({ user, token });
   } catch (err) {
     console.log("Error in login ", err);
     res.status(401).json(err);
@@ -59,6 +60,15 @@ exports.signupController = async (req, res) => {
     res.status(200).json(user);
   } catch (err) {
     console.log("Error is signup ", err);
+    res.status(401).json(err);
+  }
+};
+
+exports.logoutController = async (req, res) => {
+  try {
+    res.clearCookie("jwt", { path: "/" }).send("success");
+  } catch (err) {
+    console.log("Error is logout ", err);
     res.status(401).json(err);
   }
 };

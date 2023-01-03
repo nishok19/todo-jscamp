@@ -1,14 +1,13 @@
 import axios from "axios";
 
-export const getTodos = async (userid, token) => {
-  // const todos = await axios.get(`/api/todos/${userid}`);
+export const getTodos = async (token = "") => {
   const todos = await axios({
     method: "get",
     url: `/api/todos`,
     headers: { Authorization: `Bearer ${token}` },
   });
 
-  return todos.data;
+  return todos;
 };
 
 export const createTodo = async (todo, token) => {

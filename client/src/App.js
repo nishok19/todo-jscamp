@@ -12,7 +12,7 @@ import { sortAscTodoList } from "./utils/helper";
 function App() {
   const navigate = useNavigate();
   const addAllTodos = useTodoStore((state) => state.addAllTodos);
-  // const setUser = useTodoStore((state) => state.setUser);
+  const storeSetUser = useTodoStore((state) => state.setUser);
   const clearAll = useTodoStore((state) => state.clearAll);
   const storetodos = useTodoStore((state) => state.todos);
   const storeuser = useTodoStore((state) => state.user);
@@ -23,27 +23,34 @@ function App() {
   );
 
   useEffect(() => {
-    if (Object.keys(storeuser).length !== 0 && storeToken)
-      fetchTodos(storeuser);
+    fetchTodos();
   }, []);
 
-  const fetchTodos = async (user) => {
-    const todos = await getTodos(user._id, storeToken);
-    console.log("untodos", todos);
-    const sortedTodos = sortAscTodoList(todos);
+  const fetchTodos = async () => {
+    const { data, status } = await getTodos(storeToken);
+    if (status === 401) {
+      console.log("Session expired or user logged out");
+      navigate("/login");
+      return null;
+    }
+    const sortedTodos = sortAscTodoList(data.todos);
+    storeSetUser({ user: data.user, jwt: data.jwt });
     addAllTodos(sortedTodos);
+    console.log("third", storeuser, storetodos);
   };
 
   const handleLogout = async () => {
-    await logout();
+    const res = await logout();
+    console.log("logggginnngggggggggg out", res);
+
     clearAll();
-    console.log("Error in Logged Out");
     navigate("/login");
   };
 
   return (
     <>
       <div className="bg-bgdark text-white min-h-screen">
+        {console.log("second", storeuser)}
         {Object.keys(storeuser).length !== 0 && storeToken ? (
           <section className="mx-[200px]">
             <img
