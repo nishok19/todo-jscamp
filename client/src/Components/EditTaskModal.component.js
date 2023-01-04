@@ -25,12 +25,12 @@ const EditTaskModal = ({ task, todo }) => {
     setThisTask(task?.task);
     setStatus(task?.status);
 
-    let other = allStatus.filter((s) => status != s);
+    let other = allStatus.filter((s) => status !== s);
     setOtherStatus(other);
   }, []);
 
   const handleEditTask = async () => {
-    if (orgTask.task == thisTask && orgTask.status == status) return null;
+    if (orgTask.task === thisTask && orgTask.status === status) return null;
     const res = await editTask(
       task._id,
       todo._id,

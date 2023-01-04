@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { deleteTodo, editTodo } from "../utils/db";
 import useTodoStore from "../store/store";
 import Toast from "./Toast.component";
@@ -15,7 +15,7 @@ const EditTodoModal = ({ todo }) => {
   const storeToken = useTodoStore((state) => state.jwt);
 
   const handleEditTodo = async () => {
-    if (todo.title == thisTodo) return null;
+    if (todo.title === thisTodo) return null;
     const res = await editTodo(todo._id, thisTodo, storeToken);
     if (!res.success) {
       handleToast("Error in editing the title of the Todo...");
@@ -49,11 +49,7 @@ const EditTodoModal = ({ todo }) => {
     <div className="float-right">
       {toast.visible ? <Toast text={toast.msg} /> : null}
 
-      <label
-        htmlFor={modalId}
-        className="btn p-2"
-        onClick={() => console.log("eddittttt", todo)}
-      >
+      <label htmlFor={modalId} className="btn p-2">
         <img src="./assets/more-vertical-icon.svg" alt="edit" />
       </label>
 

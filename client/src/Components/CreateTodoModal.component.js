@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { createTodo } from "../utils/db";
 import useTodoStore from "../store/store";
 import Toast from "./Toast.component";

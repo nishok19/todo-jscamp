@@ -15,7 +15,7 @@ function SearchTodo() {
   useEffect(() => {
     toggleSortPrefStore();
     const sortedTodos =
-      sortPref == "Asc"
+      sortPref === "Asc"
         ? sortAscTodoList(storeTodos)
         : sortDscTodoList(storeTodos);
     addAllTodosStore(sortedTodos);
@@ -24,7 +24,7 @@ function SearchTodo() {
   const searchText = async () => {
     const res = await searchTodo(storeTodos, searchingText);
     console.log("seachh result: ", res);
-    if (res.length == 0) return null;
+    if (res.length === 0) return null;
     storeAddSearchedTodos(res);
   };
 

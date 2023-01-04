@@ -1,6 +1,6 @@
 export const sortAscTodoList = (todos) => {
   let sortedTodos = todos.map((todo) => {
-    let srtTodo = todo.tasks.sort((task1, task2) => {
+    todo.tasks.sort((task1, task2) => {
       return new Date(task1.createdAt) - new Date(task2.createdAt);
     });
     return todo;
@@ -10,7 +10,7 @@ export const sortAscTodoList = (todos) => {
 
 export const sortDscTodoList = (todos) => {
   let sortedTodos = todos.map((todo) => {
-    let srtTodo = todo.tasks.sort((task1, task2) => {
+    todo.tasks.sort((task1, task2) => {
       return new Date(task2.createdAt) - new Date(task1.createdAt);
     });
     return todo;
@@ -22,8 +22,6 @@ export const searchTodo = (todos, text) => {
   const selTodo = todos.filter((todo) => {
     var regex = new RegExp(text, "i");
     console.log("qqqqqq", todo);
-    // return todo.title.match(regex);
-    // return todo.tasks[0]?.task.match(regex);
     const something =
       todo?.title.match(regex) ||
       todo.tasks.filter((c) => {
