@@ -23,6 +23,7 @@ function App() {
   );
 
   useEffect(() => {
+    console.log("Envvvv ", process.env);
     fetchTodos();
   }, []);
 
