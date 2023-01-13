@@ -4,9 +4,13 @@ const { JWT_SECRET } = require("../config/env.config");
 const auth = async (req, res, next) => {
   try {
     const cookies = req.cookies;
-    const bearerToken = "";
-    // const bearerToken = req.headers.authorization;
-    console.log("cooooooooooookiessssssssssssssssssssssss...", cookies);
+    const bearerToken = req.headers.authorization;
+    console.log(
+      "cooooooooooookiessssssssssssssssssssssss...",
+      cookies.jwt,
+      bearerToken
+    );
+    // console.log("reqqqqqq", res);
     const token = cookies?.jwt || bearerToken?.split(" ")[1];
     console.log("weeeehaaa token is here.....", token);
     if (!token) return res.status(401).send("No token found, login again");

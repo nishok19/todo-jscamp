@@ -1,9 +1,11 @@
 import axios from "axios";
 
+const baseUrl = process.env.REACT_APP_BACKEND_API_URL;
+
 export const getTodos = async (token = "") => {
   const todos = await axios({
     method: "get",
-    url: `/api/todos`,
+    url: `${baseUrl}/api/todos`,
     headers: { Authorization: `Bearer ${token}` },
   });
 
@@ -14,7 +16,7 @@ export const createTodo = async (todo, token) => {
   try {
     const res = await axios({
       method: "post",
-      url: "/api/todos",
+      url: `${baseUrl}/api/todos`,
       headers: { Authorization: `Bearer ${token}` },
       data: {
         title: todo.todo,
@@ -33,7 +35,7 @@ export const editTodo = async (todoid, title, token) => {
   try {
     const res = await axios({
       method: "put",
-      url: `/api/todos/${todoid}`,
+      url: `${baseUrl}/api/todos/${todoid}`,
       headers: { Authorization: `Bearer ${token}` },
       data: {
         title,
@@ -51,7 +53,7 @@ export const deleteTodo = async (todoid, token) => {
   try {
     const res = await axios({
       method: "delete",
-      url: `/api/todos/${todoid}`,
+      url: `${baseUrl}/api/todos/${todoid}`,
       headers: { Authorization: `Bearer ${token}` },
     });
     if (!res.data) throw new Error("Error in 'deleteTodo:DB'");
@@ -66,7 +68,7 @@ export const createTask = async ({ user, todoid, task, token }) => {
   try {
     const res = await axios({
       method: "post",
-      url: `/api/todos/${todoid}/task`,
+      url: `${baseUrl}/api/todos/${todoid}/task`,
       headers: { Authorization: `Bearer ${token}` },
 
       data: {
@@ -87,7 +89,7 @@ export const editTask = async (taskid, todoid, task, token) => {
     console.log("eddiitttingggskkk ", task);
     const res = await axios({
       method: "put",
-      url: `/api/todos/${todoid}/task/${taskid}`,
+      url: `${baseUrl}/api/todos/${todoid}/task/${taskid}`,
       headers: { Authorization: `Bearer ${token}` },
 
       data: task,
@@ -104,7 +106,7 @@ export const deleteTask = async (todoid, taskid, token) => {
   try {
     const res = await axios({
       method: "delete",
-      url: `/api/todos/${todoid}/task/${taskid}`,
+      url: `${baseUrl}/api/todos/${todoid}/task/${taskid}`,
       headers: { Authorization: `Bearer ${token}` },
     });
     console.log("Deletee taskkkkkyyy", res.data);

@@ -21,11 +21,10 @@ exports.loginController = async (req, res) => {
       { expiresIn: "2h" }
     );
     user.password = undefined;
-    console.log("User .. ", user);
+    console.log("User .. ", user, token);
 
     const options = {
       expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
-      // expires: new Date(Date.now() + 600),
       httpOnly: true,
     };
     res.status(201).cookie("jwt", token, options).json({ user, token });

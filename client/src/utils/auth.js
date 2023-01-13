@@ -1,15 +1,22 @@
 import axios from "axios";
 
+const baseUrl = process.env.REACT_APP_BACKEND_API_URL;
+
 export const login = async ({ email, password }) => {
   try {
+    axios.defaults.withCredentials = true;
     const res = await axios({
       method: "post",
-      url: "/api/auth/login",
+      url: `${baseUrl}/api/auth/login`,
+      headers: {
+        withCredentials: true,
+      },
       data: {
         email,
         password,
       },
     });
+    console.log("userrrrrrrrrrrrrrr", res);
     if (!res) throw new Error("Error in 'Login-auth'");
     return { success: true, user: res.data };
   } catch (err) {
@@ -22,7 +29,7 @@ export const signup = async ({ username, email, password }) => {
   try {
     const res = await axios({
       method: "post",
-      url: "/api/auth/signup",
+      url: `${baseUrl}/api/auth/signup`,
       data: {
         username,
         email,
@@ -39,14 +46,8 @@ export const signup = async ({ username, email, password }) => {
 
 export const logout = async () => {
   try {
-    console.log("wwaaaaaaaaatt");
-    // const res = await axios({
-    //   method: "put",
-    //   url: "/api/auth/logout",
-    //   withCredentials: true,
-    // });
     const res = await axios.get(
-      "/api/auth/logout",
+      `${baseUrl}/api/auth/logout`,
       {},
       { withCredentials: true }
     );
