@@ -45,8 +45,6 @@ exports.signupController = async (req, res) => {
 
     const isUserFound = await User.findOne({ email });
 
-    //   console.log(isUserFound);
-
     if (isUserFound)
       res.status(401).send("This email id is already registered");
 

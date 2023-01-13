@@ -7,10 +7,9 @@ const auth = async (req, res, next) => {
     const bearerToken = req.headers.authorization;
     console.log(
       "cooooooooooookiessssssssssssssssssssssss...",
-      cookies.jwt,
+      req.headers,
       bearerToken
     );
-    // console.log("reqqqqqq", res);
     const token = cookies?.jwt || bearerToken?.split(" ")[1];
     console.log("weeeehaaa token is here.....", token);
     if (!token) return res.status(401).send("No token found, login again");

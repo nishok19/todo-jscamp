@@ -1,10 +1,13 @@
 import axios from "axios";
 
-const baseUrl = process.env.REACT_APP_BACKEND_API_URL;
+import { getBaseUrl } from "./helper";
 
+const baseUrl = getBaseUrl();
+
+axios.defaults.withCredentials = true;
 export const login = async ({ email, password }) => {
   try {
-    axios.defaults.withCredentials = true;
+    console.log("basseeee", baseUrl);
     const res = await axios({
       method: "post",
       url: `${baseUrl}/api/auth/login`,

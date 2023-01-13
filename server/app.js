@@ -22,6 +22,8 @@ var allowCrossDomain = function (req, res, next) {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// app.use(allowCrossDomain);
+
 app.use(cookieParser());
 
 const corsOptions = {
@@ -29,7 +31,6 @@ const corsOptions = {
   origin: true,
 };
 app.use(cors(corsOptions));
-// app.use(allowCrossDomain);
 app.use(morgan("tiny"));
 
 app.use("/", todoRoutes);
