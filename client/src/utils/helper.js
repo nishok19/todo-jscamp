@@ -40,9 +40,9 @@ export const searchTodo = (todos, text) => {
 
 export const getBaseUrl = () => {
   const prodApiUrl = "https://servertaskmaster.up.railway.app/";
+  return prodApiUrl;
   if (process.env.NODE_ENV === "development")
     return process.env.REACT_APP_BACKEND_TEST_API_URL;
   else if (process.env.NODE_ENV === "production")
     return process.env.REACT_APP_BACKEND_PROD_API_URL;
-  else return prodApiUrl;
 };
