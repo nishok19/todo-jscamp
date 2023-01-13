@@ -1,10 +1,9 @@
 import axios from "axios";
 
-import { getBaseUrl } from "./helper";
-
-const baseUrl = getBaseUrl();
+const baseUrl = process.envREACT_APP_BACKEND_API_URL;
 
 axios.defaults.withCredentials = true;
+
 export const login = async ({ email, password }) => {
   try {
     console.log("basseeee", baseUrl);

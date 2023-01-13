@@ -37,11 +37,3 @@ export const searchTodo = (todos, text) => {
   console.log("selected Todos....", selTodo);
   return selTodo;
 };
-
-export const getBaseUrl = () => {
-  console.log("devvv", process.env.REACT_APP_BACKEND_TEST_API_URL);
-  if (process.env.NODE_ENV === "development")
-    return process.env.REACT_APP_BACKEND_TEST_API_URL;
-  else if (process.env.NODE_ENV === "production")
-    return process.env.REACT_APP_BACKEND_PROD_API_URL;
-};
