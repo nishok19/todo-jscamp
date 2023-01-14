@@ -22,7 +22,7 @@ var allowCrossDomain = function (req, res, next) {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// app.use(allowCrossDomain);
+app.use(allowCrossDomain);
 
 app.use(cookieParser());
 

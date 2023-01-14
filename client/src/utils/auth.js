@@ -5,6 +5,7 @@ import { getBaseUrl } from "./helper";
 const baseUrl = getBaseUrl();
 
 axios.defaults.withCredentials = true;
+
 export const login = async ({ email, password }) => {
   try {
     console.log("basseeee", baseUrl);
