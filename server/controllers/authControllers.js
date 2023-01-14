@@ -26,7 +26,9 @@ exports.loginController = async (req, res) => {
     const options = {
       expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
       httpOnly: true,
+      sameSite: "none",
     };
+
     res.status(201).cookie("jwt", token, options).json({ user, token });
   } catch (err) {
     console.log("Error in login ", err);
