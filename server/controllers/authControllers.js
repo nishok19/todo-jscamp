@@ -27,6 +27,7 @@ exports.loginController = async (req, res) => {
       expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
       httpOnly: true,
       sameSite: "none",
+      secure: true,
     };
 
     res.status(201).cookie("jwt", token, options).json({ user, token });
